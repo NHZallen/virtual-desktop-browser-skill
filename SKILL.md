@@ -13,8 +13,8 @@ This skill provides a deterministic GUI automation runtime:
 ## Required system packages
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y xvfb chromium-browser \
+apt-get update
+apt-get install -y xvfb chromium-browser \
   libnss3 libgconf-2-4 libxss1 libasound2 \
   libatk1.0-0 libatk-bridge2.0-0 libcups2 \
   libdrm2 libgbm1 libgtk-3-0 libxshmfence1 x11-utils
@@ -28,19 +28,28 @@ pip install -r requirements.txt
 
 ## Tool surface
 
-- `browser_start(url=None, display=None)`
-- `browser_stop()`
-- `browser_snapshot(region=None)`
-- `browser_click(x, y, button='left', clicks=1, duration=0.5)`
-- `browser_type(text, interval=0.05, wpm=None)`
-- `browser_hotkey(keys, interval=0.05)`
-- `browser_scroll(clicks=1, direction='vertical', x=None, y=None)`
-- `browser_find_image(image_path, confidence=0.8)`
-- `browser_get_pixel_color(x, y)`
-- `browser_activate_window(title_substring)`
+All tools return JSON dicts.
+
+- `browser_start(url=None, display=None)` — start Xvfb + Chromium
+- `browser_stop()` — close processes
+- `browser_snapshot(region=None)` — screenshot as Base64 PNG
+- `browser_click(x, y, button='left', clicks=1, duration=0.5)` — move + click
+- `browser_type(text, interval=0.05, wpm=None)` — type at focus
+- `browser_hotkey(keys, interval=0.05)` — key combos
+- `browser_scroll(clicks=1, direction='vertical', x=None, y=None)` — mouse wheel
+- `browser_find_image(image_path, confidence=0.8)` — template matching (OpenCV)
+- `browser_get_pixel_color(x, y)` — read RGB
+- `browser_activate_window(title_substring)` — focus window by title
 
 ## Notes
 
-- Browser lifecycle is manual: start once, run multi-step flow, then stop.
-- Display can auto-assign (`:99..:199`) if not provided.
-- Failsafe: moving mouse to bottom-right corner triggers stop in pyautogui.
+- Browser lifecycle is manual: start once, multi-step flow, then stop.
+- Display auto-assigns (`:99..:199`) if not provided.
+- Failsafe: moving mouse to bottom-right corner triggers pyautogui abort.
+
+## Language
+
+See `docs/` for translations:
+- [English](docs/en.md)
+- [Español](docs/es.md)
+- [العربية](docs/ar.md)
